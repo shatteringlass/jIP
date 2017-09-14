@@ -3,6 +3,7 @@
     "client":
       {
       "name": "e045623",
+      "public_key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCYvk9Tz7J3Y61T/taMOk7ZPdUmPbq9gFoIflVLxqR2BHY7YKHLScco/YM9e4u6qhc9aGjXSzXjUOZf9eoaH4/tQ796bamxEXvPH5gDoO2s1DxZ13jUQkWKVPZ79B4qZ3O9wfc+2j+aXiS1akg7N56XIYqygzKC8wE+/cRIE4vBb464xG4c3dza6Zd9d1KjCO0WScMgWJIZXL6m88lF8ZMtpk4gbvUoSTZVDgZ0n00fYiGCLhHIpFPDt94QSDgG/bw/f4AYVntsIcirUT5cSFiSDo0YNYi8hEFshrAj3MQTbPo4vWT0do54OLm5eIuS2tFIb3jC+WWZhLqLLuA84gpx",
       "ip": "10.37.56.102",
       "last_seen": "201709111055Z"
     }
@@ -11,6 +12,7 @@
     "client":
     {
       "name": "e462173",
+      "public_key": "AADAB4NzaC1yc2EAAAADAQABAAABAQCYvk9Tz7J3Y61T/taMOk7ZPdUmPbq9gFoIflVLxqR2BHY7YKHLScco/YM9e4u6qhc9aGjXSzXjUOZf9eoaH4/tQ796bamxEXvPH5gDoO2s1DxZ13jUQkWKVPZ79B4qZ3O9wfc+2j+aXiS1akg7N56XIYqygzKC8wE+/cRIE4vBb464xG4c3dza6Zd9d1KjCO0WScMgWJIZXL6m88lF8ZMtpk4gbvUoSTZVDgZ0n00fYiGCLhHIpFPDt94QSDgG/bw/f4AYVntsIcirUT5cSFiSDo0YNYi8hEFshrAj3MQTbPo4vWT0do54OLm5eIuS2tFIb3jC+WWZhLqLLuA84gpx",
       "ip": "10.27.86.92",
       "last_seen": "201709101055Z"
     }
@@ -18,6 +20,7 @@
     {"client":
       {
       "name": "e162173",
+      "public_key": "ACRAB3NzaC1yc2EAAAADAQABAAABAQCYvk9Tz7J3Y61T/taMOk7ZPdUmPbq9gFoIflVLxqR2BHY7YKHLScco/YM9e4u6qhc9aGjXSzXjUOZf9eoaH4/tQ796bamxEXvPH5gDoO2s1DxZ13jUQkWKVPZ79B4qZ3O9wfc+2j+aXiS1akg7N56XIYqygzKC8wE+/cRIE4vBb464xG4c3dza6Zd9d1KjCO0WScMgWJIZXL6m88lF8ZMtpk4gbvUoSTZVDgZ0n00fYiGCLhHIpFPDt94QSDgG/bw/f4AYVntsIcirUT5cSFiSDo0YNYi8hEFshrAj3MQTbPo4vWT0do54OLm5eIuS2tFIb3jC+WWZhLqLLuA84gpx",
       "ip": "10.17.16.82",
       "last_seen": "201708101055Z"
     }
