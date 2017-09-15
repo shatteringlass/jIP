@@ -20,7 +20,7 @@ function requireLease {
 
   filename=request-$public_key-$timestamp.json
   file=$CLIENT_PATH/requests/$filename
-  echo -e "[\n{\n\"client\":\n{\n\t\"hostname\":\""$hostname"\",\n \t\"public_key\":\""$public_key"\",\n\t\"ip\":\""$ip"\",\n\t\"request\":\""$timestamp"\"\n}\n}\n]" > $file
+  echo -e "[\n{\n\"client\":\n{\n\t\"hostname\":\""$hostname"\",\n \t\"public_key\":\""$public_key"\",\n\t\"ip\":\""$ip"\",\n\t\"request-timestamp-utc\":\""$timestamp"\"\n}\n}\n]" > $file
 
   # copy request to server folder using scp, naming the request with a proper timestamp
   $CLIENT_PATH/expect -c "
