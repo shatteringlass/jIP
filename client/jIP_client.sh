@@ -1,8 +1,5 @@
 ## TODO
-## - SPAWN FUNCTION INSIDE requireLease -- OK
-## - string2Epoch -- OK
-## - serverResponse
-## - general testing, last commit was not tested at all
+## 1) Implement serverResponse function
 
 CLIENT_USER_SSH=$1
 CLIENT_PASSWORD_SSH=$2 # please pass this argument in base64 format
@@ -58,25 +55,16 @@ function getPublicKey_sha256sum {
 
 function getPublicIP {
   # returns public IP
-  echo $(curl ipinfo.io/ip)
+  echo $(curl -s ipinfo.io/ip)
 }
 
-function isGNUDate {
-  if date --version >/dev/null 2>&1 ; then
-    echo 0 # GNU compliant
-  else
-    echo 1 # BSD compliant
-  fi
-}
 
 function hasRequest {
   # if we have a request*.json file present
-
   extension=.json
-  filename=$pwd/request*$extension
-
-  for file in $filename; do
-    [ -e "$file" ] && echo $file || echo 0
+  path=$CLIENT_PATH/requests/request*$extension
+  for file in $path; do
+    [ -e "$file" ] && echo $file || echo null
     break
   done
 }
@@ -84,20 +72,25 @@ function hasRequest {
 function checkLease {
 file=$(hasRequest)
 extension=.json
-  if [[ $file -ne 0 ]] && [[ -f $file ]]; then
+  if [[ -f $file ]]; then
     howLong=$(isRecent $(getRequestTimestamp $file $extension))
-    if [ $howLong -eq 1 ]; then
-      if [ serverResponse -eq 1 ]; then
+    # the request might have been processed by the server
+    if [[ $howLong -eq 1 ]]; then
+      # let's try querying the server
+      if [[ $(serverResponse) -eq 1 ]]; then
+        # all good
         echo 1
       else
-        echo 0
+        # not yet
+        echo -1
       fi
     elif [[ $howLong -eq -1 ]]; then
-      # retry in a little while
+      # checking too soon, see you in a while
       echo -1
     fi
   else
-      echo 0
+    # no active requests found, ask for a new request
+    echo 0
   fi
 }
 
@@ -109,15 +102,23 @@ function getRequestTimestamp {
 }
 
 function isRecent {
-  CURREPOCH=$(date +%s)
-  PRECISION=1800
-  OTHER_TIME=$(string2Epoch $1)
-  if [[ $OTHER_TIME -le $CURREPOCH-$PRECISION ]]; then
+  CURR_EPOCH=$(date -u +%s)
+  TOLERANCE=1800
+  request_time=$(string2Epoch $1)
+  if [[ $request_time -le $[$CURR_EPOCH-$TOLERANCE] ]]; then
     # adequate amount of time passed, let's ask for a server verification
     echo 1
   else
     # need to wait
     echo -1
+  fi
+}
+
+function isGNUDate {
+  if date --version >/dev/null 2>&1 ; then
+    echo 0 # GNU compliant
+  else
+    echo 1 # BSD compliant
   fi
 }
 
@@ -132,7 +133,7 @@ function parseYMD {
 function string2Epoch {
   string=$(parseYMD $1)
   if [[ isGNUDate -eq 0 ]]; then
-    echo $(date -d "$string" +%s)
+    echo $(date -d "$string" +%s -u)
   else
     echo $(date -j -f "%Y%m%d %H:%M:%S" "$string" +%s)
   fi
@@ -146,15 +147,23 @@ function serverResponse {
     # echo 0
 }
 
+function archiveOldRequests {
+  mv $CLIENT_PATH/requests/*.json $CLIENT_PATH/requests/old
+  echo "Successfully moved old requests."
+}
+
 function main {
   if [ $(checkLease) -eq 1 ]; then
     echo "Server responded correctly to latest request."
     exit 0
   elif [[ $(checkLease) -eq -1 ]]; then
     # let's try again later
-    echo "We'll try again later."
+    echo "Please wait to check request result. We'll try again later."
     exit -1
   else
+    echo "There seems to be no valid request pending."
+    archiveOldRequests
+    echo "Proceeding with new request generation..."
     requireLease $(getHostname) $(getPublicKey_sha256sum) $(getPublicIP) $(getTimestamp)
     exit 1
   fi

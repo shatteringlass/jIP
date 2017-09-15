@@ -1,6 +1,8 @@
+CLIENT_PATH=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
+
 function acquireRequests {
-# check .requests folder for incoming JSONs, process one by one
-  folder='.requests'
+# check requests folder for incoming JSONs, process one by one
+  folder='requests'
   for $i.json in $folder:
     key = "key"
     validateKey $key
@@ -30,4 +32,4 @@ function main {
   startLease
 }
 
-main > /dev/null 2>&1
+main #> /dev/null 2>&1
