@@ -59,11 +59,11 @@ function manageOrderbook {
 
 function pickAction {
   local type=$1
-  if $type -eq "renew"; then
+  if [[ $type -eq "renew" ]]; then
     echo renewLease
-  elif $type -eq "start"; then
+  elif [[ $type -eq "start" ]]; then
     echo startLease
-  elif $type -eq "prune"; then
+  elif [[ $type -eq "prune" ]]; then
     echo endLease
   else $(doNothing)
   fi
@@ -73,11 +73,11 @@ function doFiltering {
   local orderbook=$1
   local type=$2
 
-  if $type -eq "renew"; then
+  if [[ $type -eq "renew" ]]; then
     # filter new hostnames
-  elif $type -eq "start"; then
+  elif [[ $type -eq "start" ]]; then
   # filter preexisting hostnames
-  elif $type -eq "prune"; then
+  elif [[ $type -eq "prune" ]]; then
   # filter aged hostnames
   fi
 }
