@@ -1,5 +1,4 @@
-# Update current clients with info from stacks
-# Remember to dismiss exipred clients
+# setLastRun
 
 CLIENT_PATH=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 

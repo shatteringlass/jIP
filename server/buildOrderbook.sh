@@ -1,6 +1,6 @@
 CLIENT_PATH=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
-function acquireRequests {
+function buildOrderbook {
     # periodic check: JSONs available inside requests folder?
     # if available, send for processing
     local folder=$CLIENT_PATH/requests
@@ -11,7 +11,7 @@ function acquireRequests {
     for i in $(echo -e $folder/$file); do
         #TODO: maybe check request key against an accepted dictionary? Although scp already checks sender identity
         local json=$(unboxJSON $i)
-        echo -e $json | buildOrderbook "${orderbook}" "${pending}" # parse i-th request and append to orderbook
+        echo -e $json | acquireRequests "${orderbook}" "${pending}" # parse i-th request and append to orderbook
         pending=$((--pending)) # decrement requests remaining
     done
     echo -e -e ']' >> $orderbook
@@ -34,19 +34,26 @@ function unboxJSON {
     echo -e $output
 }
 
-function buildOrderbook {
+function acquireRequests {
     # The idea is to add json blocks to an orderbook file (first argument).
-    local block=$1
+    local block="$1"
     # To provide proper syntax, a "remaining block" counter (second argument, $pending) is provided.
-    local counter=$2
+    local counter="$2"
     # While $pending>0, a ",\n" is written after the block
     while read data
     do
         if [[ $counter -gt 1 ]]; then
-            echo -e -e $data, >> $block
+            echo -e "$data", >> "$block"
             # Write "\n]" then reparse to adjust syntax
         else
-            echo -e -e $data >> $block
+            echo -e "$data" >> "$block"
         fi
     done
 }
+
+function main {
+    buildOrderbook
+}
+
+
+main #> /dev/null 2>&1
