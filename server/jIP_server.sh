@@ -1,4 +1,4 @@
-CLIENT_PATH=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
+CLIENT_PATH="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"/functions/
 
 CLR="$CLIENT_PATH"/checkLastRun.sh
 SLR="$CLIENT_PATH"/setLastRun.sh
